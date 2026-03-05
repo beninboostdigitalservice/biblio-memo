@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>Template - Ajouter PDF</title>
+</head>
+<body>
+<h2>Exemple : ajouter une carte de mémoire (collez ce bloc dans <code>index.html</code> dans la section <code>.memoires</code>)</h2>
+
+<pre>
+<div class="card" data-specialite="energetique">
+    <h3>Titre du mémoire</h3>
+    <p>Spécialité : Énergétique</p>
+    <p><button class="readBtn" data-file="https://drive.google.com/file/d/FILE_ID/view?usp=sharing">Lire</button></p>
+</div>
+</pre>
+
+<p>Notes :</p>
+<ul>
+    <li>Collez l'URL de partage Google Drive dans <code>data-file</code>. Le script convertit automatiquement en lien de prévisualisation (<code>/preview</code>).</li>
+    <li>Formats acceptés :
+        <ul>
+            <li><code>https://drive.google.com/file/d/FILE_ID/view?usp=sharing</code></li>
+            <li><code>https://drive.google.com/open?id=FILE_ID</code></li>
+        </ul>
+    </li>
+    <li>Si vous préférez garder un fichier local, mettez le chemin local relatif (ex. <code>uploads/energetique/monmemoire.pdf</code>).</li>
+    <li>Veillez à ce que les valeurs de <code>data-specialite</code> correspondent aux options du filtre : <code>cyber</code>, <code>ia</code>, <code>geniecivilbatiment</code>, <code>finance</code>, <code>energetique</code>.</li>
+</ul>
+
+</body>
+</html>
