@@ -133,3 +133,202 @@ footer {
         padding: 20px;
     }
 }
+
+/* ============================================
+   PAGE ADMIN - STATISTIQUES
+   ============================================ */
+
+.stats-dashboard {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+}
+
+.stats-dashboard h2 {
+    color: #1e3a8a;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 28px;
+}
+
+.stats-dashboard h3 {
+    color: #374151;
+    margin: 30px 0 15px 0;
+    font-size: 20px;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 10px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+    color: white;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-number {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 14px;
+    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Barres de progression par spécialité */
+.specialite-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.spec-bar {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    background: #f9fafb;
+    border-radius: 8px;
+}
+
+.spec-name {
+    width: 200px;
+    font-weight: 500;
+    color: #374151;
+    flex-shrink: 0;
+}
+
+.spec-progress {
+    flex: 1;
+    height: 20px;
+    background: #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.spec-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2563eb, #3b82f6);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+.spec-count {
+    width: 100px;
+    text-align: right;
+    font-weight: 600;
+    color: #1e3a8a;
+}
+
+/* Historique des clics */
+.click-history {
+    list-style: none;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.click-history li {
+    display: flex;
+    gap: 15px;
+    padding: 12px;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 14px;
+    align-items: center;
+}
+
+.click-date {
+    color: #6b7280;
+    min-width: 150px;
+    font-size: 12px;
+}
+
+.click-spec {
+    background: #dbeafe;
+    color: #1e40af;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    min-width: 120px;
+    text-align: center;
+}
+
+.click-title {
+    flex: 1;
+    color: #374151;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Boutons */
+.export-btn, .reset-btn {
+    margin-top: 30px;
+    margin-right: 10px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.export-btn {
+    background: #10b981;
+    color: white;
+}
+
+.export-btn:hover {
+    background: #059669;
+    transform: translateY(-2px);
+}
+
+.reset-btn {
+    background: #ef4444;
+    color: white;
+}
+
+.reset-btn:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+}
+
+/* Responsive admin */
+@media(max-width: 768px) {
+    .stats-dashboard {
+        margin: 20px;
+        padding: 20px;
+    }
+    
+    .spec-name {
+        width: 120px;
+        font-size: 13px;
+    }
+    
+    .click-history li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+}
