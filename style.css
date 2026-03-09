@@ -121,17 +121,64 @@ footer {
 /* RESPONSIVE */
 
 @media(max-width: 768px) {
+    
+    /* HEADER (inchangé) */
     header {
         flex-direction: column;
+        padding: 15px 20px;  /* Ajout : padding réduit */
+    }
+
+    .logo {
+        font-size: 24px;     /* Ajout : texte plus grand */
+        margin-bottom: 10px;
     }
 
     nav {
         margin-top: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;           /* Ajout : espacement entre liens */
     }
 
-    .memoires {
-        padding: 20px;
+    nav a {
+        margin-left: 0;      /* Ajout : reset de la marge desktop */
+        font-size: 15px;     /* Ajout : texte plus lisible */
     }
+
+    /* ============================================
+       GRILLE : PASSAGE À 2 COLONNES
+       ============================================ */
+    
+    .memoires {
+        grid-template-columns: repeat(2, 1fr) !important; /* 2 colonnes égales */
+        gap: 15px;          /* Espacement entre cartes */
+        padding: 20px 15px; /* Marges latérales réduites */
+    }
+
+    /* CARTES : plus compactes */
+    .card {
+        padding: 15px 12px;
+        min-height: auto;
+    }
+
+    .card h3 {
+        font-size: 13px;     /* Titre lisible mais compact */
+        line-height: 1.3;
+        margin-bottom: 8px;
+    }
+
+    .card p {
+        font-size: 11px;     /* Spécialité plus petite */
+    }
+
+    .card button {
+        width: 100%;         /* Bouton pleine largeur */
+        padding: 10px;
+        font-size: 13px;
+        margin-top: 10px;
+    }
+
 }
 
 /* ============================================
