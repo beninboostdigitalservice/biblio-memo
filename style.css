@@ -361,3 +361,17 @@ footer {
         padding: 10px;
     }
 }
+
+/* ============================================
+   FORCER 2 COLONNES SUR MOBILE
+   ============================================ */
+
+@media(max-width: 768px) {
+    
+    .memoires {
+        grid-template-columns: repeat(2, 1fr) !important; /* 2 colonnes égales */
+        gap: 15px;          /* Espacement réduit */
+        padding: 20px 15px; /* Marges réduites */
+    }
+
+}
