@@ -1,26 +1,199 @@
 document.addEventListener('DOMContentLoaded', () => {
+    document.documentElement.classList.add('js');
+
     const specialiteSelect = document.getElementById('specialiteFilter');
     const memoireList = document.getElementById('memoireList');
+    const header = document.querySelector('header');
+    const menuToggle = document.querySelector('.menu-toggle');
+    const primaryNav = document.getElementById('primaryNav');
+
+    function normalizeSpecialite(value) {
+        return String(value || '')
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z0-9]/g, '');
+    }
 
     function filterMemoires() {
-        const selected = specialiteSelect.value;
+        const selected = normalizeSpecialite(specialiteSelect.value);
         const cards = memoireList.querySelectorAll('.card');
         cards.forEach(card => {
-            const spec = card.getAttribute('data-specialite');
+            const spec = normalizeSpecialite(card.getAttribute('data-specialite'));
             card.style.display = (selected === 'all' || spec === selected) ? '' : 'none';
         });
     }
 
-    specialiteSelect.addEventListener('change', filterMemoires);
+    function setMenuOpen(isOpen) {
+        if (!header || !menuToggle) return;
+        header.classList.toggle('is-menu-open', isOpen);
+        menuToggle.setAttribute('aria-expanded', String(isOpen));
+    }
 
-    // Event delegation pour les boutons Lire -> ouvrir dans un nouvel onglet
-    memoireList.addEventListener('click', (e) => {
-        const btn = e.target.closest('.readBtn');
-        if (!btn) return;
-        const file = btn.getAttribute('data-file');
-        if (!file) return;
-        openDriveOrUrlInNewTab(file);
+    function setupMenu() {
+        if (!header || !menuToggle || !primaryNav) return;
+
+        menuToggle.addEventListener('click', () => {
+            const isOpen = header.classList.contains('is-menu-open');
+            setMenuOpen(!isOpen);
+        });
+
+        primaryNav.addEventListener('click', (e) => {
+            const link = e.target.closest('a');
+            if (!link) return;
+            setMenuOpen(false);
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!header.classList.contains('is-menu-open')) return;
+            const insideHeader = header.contains(e.target);
+            if (!insideHeader) setMenuOpen(false);
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key !== 'Escape') return;
+            if (!header.classList.contains('is-menu-open')) return;
+            setMenuOpen(false);
+            menuToggle.focus();
+        });
+    }
+
+    function setupCardReveal() {
+        const cards = memoireList ? Array.from(memoireList.querySelectorAll('.card')) : [];
+        if (!cards.length) return;
+
+        const reveal = (card) => card.classList.add('is-visible');
+
+        if (!('IntersectionObserver' in window)) {
+            cards.forEach(reveal);
+            return;
+        }
+
+        cards.forEach(card => card.classList.add('will-reveal'));
+
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                reveal(entry.target);
+                io.unobserve(entry.target);
+            });
+        }, { root: null, threshold: 0.12 });
+
+        cards.forEach(card => io.observe(card));
+    }
+
+    // NOTE: onglets de tri supprimés — on utilise uniquement le `select` pour filtrer
+
+    specialiteSelect.addEventListener('change', () => {
+        filterMemoires();
     });
+
+    // Remplacer les boutons "Lire" existants par 2 icônes : view + download
+    function replaceReadButtons() {
+        const oldBtns = memoireList.querySelectorAll('.readBtn');
+        oldBtns.forEach(b => {
+            const file = b.getAttribute('data-file');
+            const actions = document.createElement('div');
+            actions.className = 'card-actions';
+
+            // View button (opens preview)
+            const view = document.createElement('button');
+            view.type = 'button';
+            view.className = 'icon-btn view';
+            view.setAttribute('aria-label', 'Voir le document');
+            view.dataset.file = file || '';
+            view.innerHTML = `\
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">\
+                    <path d="M12 5C7 5 2.73 8.11 1 12c1.73 3.89 6 7 11 7s9.27-3.11 11-7c-1.73-3.89-6-7-11-7zm0 11.5a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9zm0-7a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z"/>\
+                </svg>`;
+
+            // Download button
+            const dl = document.createElement('button');
+            dl.type = 'button';
+            dl.className = 'icon-btn download';
+            dl.setAttribute('aria-label', 'Télécharger le document');
+            dl.dataset.file = file || '';
+            dl.innerHTML = `\
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">\
+                    <path d="M12 16c-.3 0-.59-.11-.82-.33l-4-4a1.003 1.003 0 011.41-1.42L11 12.59V4a1 1 0 112 0v8.59l2.41-2.34a1.003 1.003 0 011.41 1.42l-4 4c-.23.22-.52.33-.82.33zM5 20a1 1 0 010-2h14a1 1 0 010 2H5z"/>\
+                </svg>`;
+
+            actions.appendChild(view);
+            actions.appendChild(dl);
+
+            // Remplace le parent du bouton existant
+            const parentP = b.parentElement;
+            if (parentP) parentP.replaceChild(actions, b);
+        });
+    }
+
+    // Gestion des clics sur view / download
+    memoireList.addEventListener('click', (e) => {
+        const view = e.target.closest('.icon-btn.view');
+        const dl = e.target.closest('.icon-btn.download');
+        if (view) {
+            const file = view.dataset.file;
+            if (file) openDriveOrUrlInNewTab(file);
+            try { StatsManager && StatsManager.recordPDFClick((view.closest('.card')||{}).dataset.specialite, (view.closest('.card')||{}).querySelector('h3')?.textContent || 'Sans titre'); } catch(e) {}
+            return;
+        }
+        if (dl) {
+            const file = dl.dataset.file;
+            if (file) downloadFile(file);
+            try { StatsManager && StatsManager.recordPDFClick((dl.closest('.card')||{}).dataset.specialite, (dl.closest('.card')||{}).querySelector('h3')?.textContent || 'Sans titre'); } catch(e) {}
+            return;
+        }
+    });
+
+    function toDriveDownload(url) {
+        try {
+            const u = new URL(url);
+            if (u.hostname.includes('drive.google.com')) {
+                const m = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+                const id = m && m[1] ? m[1] : u.searchParams.get('id');
+                if (id) return `https://drive.google.com/uc?export=download&id=${id}`;
+            }
+        } catch (err) {}
+        return url;
+    }
+
+    function downloadFile(file) {
+        const final = toDriveDownload(file);
+        const a = document.createElement('a');
+        a.href = final;
+        a.setAttribute('rel', 'noopener noreferrer');
+        a.download = '';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+    }
+
+    // Simple typing animation for hero text
+    function initAnimatedText() {
+        const el = document.querySelector('.animated-text');
+        if (!el) return;
+        const phrases = [
+            'Bibliothèque de mémoires',
+            'Trouvez le mémoire qui fera avancer votre projet',
+            'Téléchargez ou consultez en un clic'
+        ];
+        let idx = 0, pos = 0, forward = true;
+
+        function step() {
+            const str = phrases[idx];
+            if (forward) {
+                pos++;
+                el.textContent = str.slice(0, pos);
+                if (pos >= str.length) { forward = false; setTimeout(step, 1200); return; }
+            } else {
+                pos--;
+                el.textContent = str.slice(0, pos);
+                if (pos <= 0) { forward = true; idx = (idx + 1) % phrases.length; }
+            }
+            setTimeout(step, forward ? 60 : 30);
+        }
+        step();
+    }
 
     function toDrivePreview(url) {
         try {
@@ -49,7 +222,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // appel initial
+    setupMenu();
+    setupCardReveal();
+    replaceReadButtons();
+    initAnimatedText();
     filterMemoires();
+
+    // Highlight du lien de navigation actif
+    try {
+        const links = document.querySelectorAll('nav#primaryNav .nav-link');
+        const current = location.href;
+        links.forEach(link => {
+            const href = link.getAttribute('href') || '';
+            if (href.startsWith('#')) {
+                if (location.hash === href) link.classList.add('is-nav-active');
+            } else {
+                // compare la fin de l'URL afin de fonctionner en file:// ou serveur
+                if (current.endsWith(href) || (href === 'index.html' && current.endsWith('/'))) {
+                    link.classList.add('is-nav-active');
+                }
+            }
+        });
+        // Add click handlers to update active state immediately and close menu on mobile
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                links.forEach(l => l.classList.remove('is-nav-active'));
+                link.classList.add('is-nav-active');
+                // close mobile menu
+                try { setMenuOpen(false); } catch (err) {}
+            });
+        });
+    } catch (err) {
+        // silent
+    }
 });
 
 // Ajoutez ceci à votre script.js existant
@@ -99,12 +304,13 @@ const StatsManager = {
         if (!memoireList) return;
 
         memoireList.addEventListener('click', (e) => {
-            const btn = e.target.closest('.readBtn');
+            const btn = e.target.closest('.icon-btn, .readBtn');
             if (!btn) return;
 
             const card = btn.closest('.card');
-            const specialite = card?.dataset.specialite || 'unknown';
-            const title = card?.querySelector('h3')?.textContent?.trim() || 'Sans titre';
+            const specialite = (card && card.dataset && card.dataset.specialite) ? card.dataset.specialite : 'unknown';
+            const titleEl = card ? card.querySelector('h3') : null;
+            const title = titleEl && titleEl.textContent ? titleEl.textContent.trim() : 'Sans titre';
 
             this.recordPDFClick(specialite, title);
         });
@@ -147,7 +353,7 @@ const StatsManager = {
     // Affiche les stats dans la console (ou créez une page admin)
     displayStats() {
         const stats = this.getStats();
-        console.log('=== STATISTIQUES RÉUSSIRMASOUTENANCE ===');
+        console.log('=== STATISTIQUES Réussir ma Soutenance ===');
         console.log(`Visites totales: ${stats.totalVisits}`);
         console.log(`Clics PDF totaux: ${stats.totalPDFClicks}`);
         console.log('Par spécialité:', stats.bySpecialite);

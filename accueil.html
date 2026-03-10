@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Réussir ma Soutenance — bibliothèque en ligne de mémoires, guides et ressources pour préparer votre soutenance. Parcourez, consultez et téléchargez des mémoires classés par spécialité.">
+    <!-- Open Graph -->
+    <meta property="og:title" content="Réussir Ma Soutenance">
+    <meta property="og:description" content="Bibliothèque en ligne de mémoires et ressources pour préparer votre soutenance. Consultez et téléchargez des mémoires par spécialité.">
+    <meta property="og:image" content="logo.png">
+    <meta property="og:url" content="./">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Réussir ma Soutenance">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Réussir ma Soutenance">
+    <meta name="twitter:description" content="Bibliothèque en ligne de mémoires : trouvez, consultez et téléchargez des mémoires par spécialité.">
+    <meta name="twitter:image" content="logo.png">
+    <title> Réussir ma Soutenance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="logo.png">
+    <!-- loader resources (separated) -->
+    <script src="loader.js" defer></script>
+</head>
+<body>
+
+    <!-- loader is injected dynamically by loader.js (loader.html + loader.css) -->
+
+
+<header>
+    <div class="logo">Réussir ma Soutenance</div>
+    <button class="menu-toggle" type="button" aria-controls="primaryNav" aria-expanded="false" aria-label="Ouvrir le menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z" fill="currentColor" />
+        </svg>
+    </button>
+    <nav id="primaryNav" role="navigation" aria-label="Navigation principale">
+        <a class="nav-link" href="index.html">Accueil</a>
+        <a class="nav-link" href="#memoireList">Mémoires</a>
+        <a class="nav-link" href="about.html">À propos</a>
+        <a class="nav-link" href="contact.html">Nous joindre</a>
+        <a class="nav-link" href="privacy.html">Politique & RGPD</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <img src="logo.png" alt="Logo Réussir ma Soutenance" class="hero-logo">
+    <h1>Bibliothèque de Mémoires Classés</h1>
+    <p>Trouvez le mémoire qui fera avancer votre projet — choisissez une spécialité et accédez au PDF en un clic.</p>
+    <div class="hero-animated">
+        <span class="animated-text" aria-live="polite"></span>
+    </div>
+
+    <div class="filters">
+        <select id="specialiteFilter">
+            <option value="all">Toutes les spécialités</option>
+            <option value="cyber">Cybersécurité</option>
+            <option value="ia">Intelligence Artificielle</option>
+            <option value="geniecivilbatiment">Génie civil </option>
+            <option value="finance">Finance</option>
+            <option value="energetique">Énergétique et Procédés</option>
+            <option value="energierenouvelable">Énergie Renouvelable</option>
+            <option value="froidetclimatisation">Froid et Climatisation</option>
+        
+        </select>
+    </div>
+
+    <!-- Ajout manuel retiré — ajoutez des cartes directement dans la section .memoires si nécessaire -->
+</section>
+
+<section class="memoires" id="memoireList">
+        <!-- 
+                AJOUTER UN PDF MANUELLEMENT :
+                ============================
+                Ajoutez un bloc comme celui-ci pour chaque mémoire. Modifiez :
+                - `data-specialite` : cyber, ia, geniecivilbatiment, finance, energetique, energierenouvelable
+                - TITRE
+                - `data-file` : collez ici l'URL Google Drive (partage) ou le chemin local.
+                    Exemples de formats Drive acceptés :
+                        https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+                        https://drive.google.com/open?id=FILE_ID
+                    Le script convertira automatiquement en lien de prévisualisation `/preview`.
+                Consultez `TEMPLATE_AJOUTER_PDF.html` pour des exemples complets.
+        -->
+    <div class="card" data-specialite="energetique">
+        <h3>AIDE A LA PREPARATION DE LA SOUTENANCE DU MEMOIRED' INGENIEUR</h3>
+        <p>Spécialité : Énergétique et Procédés</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1I-27UsS-CmvescDhphxPfCfRJD5iIOjI/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="energetique">
+        <h3>Guide pour la rédaction du mémoire d’ingénieur</h3>
+        <p>Spécialité : Énergétique et Procédés</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/195if4gP5ZEdF13C-a2dWVFJRWFGsgoQi/view?usp=sharing">Lire</button></p>
+    </div>
+    
+    <div class="card" data-specialite="geniecivilbatiment">
+        <h3>AIDE A LA PREPARATION DE LA SOUTENANCE DU MEMOIRED' INGENIEUR</h3>
+        <p>Spécialité : Génie civil </p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1I-27UsS-CmvescDhphxPfCfRJD5iIOjI/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="geniecivilbatiment">
+        <h3>Guide pour la rédaction du mémoire d’ingénieur</h3>
+        <p>Spécialité : Génie civil </p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/195if4gP5ZEdF13C-a2dWVFJRWFGsgoQi/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="finance">
+        <h3>AIDE A LA PREPARATION DE LA SOUTENANCE DU MEMOIRED' INGENIEUR</h3>
+        <p>Spécialité : Finance</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1I-27UsS-CmvescDhphxPfCfRJD5iIOjI/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="finance">
+        <h3>Guide pour la rédaction du mémoire d’ingénieur</h3>
+        <p>Spécialité : Finance</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/195if4gP5ZEdF13C-a2dWVFJRWFGsgoQi/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="ia">
+        <h3>AIDE A LA PREPARATION DE LA SOUTENANCE DU MEMOIRED' INGENIEUR</h3>
+        <p>Spécialité : Intelligence Artificielle</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1I-27UsS-CmvescDhphxPfCfRJD5iIOjI/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="ia">
+        <h3>Guide pour la rédaction du mémoire d’ingénieur</h3>
+        <p>Spécialité : Intelligence Artificielle</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/195if4gP5ZEdF13C-a2dWVFJRWFGsgoQi/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="energirenouvelable">
+        <h3>AIDE A LA PREPARATION DE LA SOUTENANCE DU MEMOIRED' INGENIEUR</h3>
+        <p>Spécialité : Énergie Renouvelable</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1I-27UsS-CmvescDhphxPfCfRJD5iIOjI/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="energirenouvelable">
+        <h3>Guide pour la rédaction du mémoire d’ingénieur</h3>
+        <p>Spécialité : Énergie Renouvelable</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/195if4gP5ZEdF13C-a2dWVFJRWFGsgoQi/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="cyber">
+        <h3>AIDE A LA PREPARATION DE LA SOUTENANCE DU MEMOIRED' INGENIEUR</h3>
+        <p>Spécialité : Cybersécurité</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1I-27UsS-CmvescDhphxPfCfRJD5iIOjI/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="cyber">
+        <h3>Guide pour la rédaction du mémoire d’ingénieur</h3>
+        <p>Spécialité : Cybersécurité</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/195if4gP5ZEdF13C-a2dWVFJRWFGsgoQi/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="cyber">
+        <h3>PComment optimiser la détection des attaques 
+            Botnet à l’aide des approches en autoencodeur 
+            et CNN 
+        </h3>
+        <p>Spécialité : Cybersécurité</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1sgsrFlKIEor3-tk8x_Obka_rkz2AQKaf/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="ia">
+        <h3>Prédiction du Diabète géstationnel en utilisant
+            les techniques de l’intelligence artificielle
+        </h3>
+        <p>Spécialité : Intelligence Artificielle</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1-PpB7oSvPiCElxVC6jP2LwL-lL3Pn_Qh/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="geniecivilbatiment">
+        <h3>Etude d’un bâtiment « R+5 étages » à usage d’habitation 
+            et commercial en Béton Armé 
+        </h3>
+        <p>Spécialité : Génie civil </p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1uxxfONYM1jEOQ0T4tfn2Ah_QgQ1kQ8WD/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="finance">
+        <h3>La gestion financière et le dirigeant de PME : 
+            Le concept de l’utilité perçue.
+        </h3>
+        <p>Spécialité : Finance</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1dEZ-BVzmCai_CxWXoG8zr19pfBU74j_i/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="energetique">
+        <h3>Etude d’une station de production d’air comprimé (étude du cas de la SKT)</h3>
+        <p>Spécialité : Énergétique et Procédés</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1qRFygb1rTrtSGzZQNjYPnlAM4KlkWFFS/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="energetique">
+        <h3>Optimisation énergétique des compresseurs d'air via une régulation par un variateur de vitesse (CEVITAL)</h3>
+        <p>Spécialité : Énergétique</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1nX55fjpMblMKhVItnq4pPhwbVoKcxL8N/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="energetique">
+        <h3>ETUDE DE LA MAINTENANCE D' UN COMPRESSEUR ABC</h3>
+        <p>Spécialité : Énergétique et Procédés</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1895JY6R-pCDIiZU2-IHntQ03KiwCFtHG/view?usp=sharing">Lire</button></p>
+    </div>
+    <div class="card" data-specialite="energetique">
+        <h3>Optimisation de la consommation des 
+            compresseurs d’air comprimé DSD 171</h3>
+        <p>Spécialité : Énergétique et Procédés</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/11LcHmKXVaM1HRxqQ_ariacXEZqDKlQvK/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="energierenouvelable">
+        <h3>POLYCOPIE de Cours</h3>
+        <p>Spécialité : Énergie Renouvelable</p>
+        <p><button class="readBtn" data-file="http://dspace.univ-relizane.dz/home/bitstream/123456789/246/1/Polycopie%20de%20cours-EnR%20mostefa.pdf">Lire</button>
+        </p>
+    </div>
+
+    <div class="card" data-specialite="energetique">
+        <h3>ETUDE DU FONCTIONNEMENT ET ELABORATION D’UN 
+            PLAN DE MAINTENANCE  PREVENTIVE ET CURATIVE DU 
+            GROUPE ELECTROGENE (BLACK-START GENERATOR) 
+            DE LA CENTRALE THERMIQUE DE DIBAMBA
+        </h3>
+        <p>Spécialité : Énergétique et Procédés</p>
+        <p><button class="readBtn" data-file="http://documentation.2ie-edu.org/cdi2ie/opac_css/doc_num.php?explnum_id=1888">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="energierenouvelable">
+        <h3>Simulation de chaine de conversion d'énergie appliquée à une éolienne de type Savonius</h3>
+        <p>Spécialité : Énergie Renouvelable</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1J5ftZnARX_DW3PONJX9fO7owbAvKYThh/view?usp=sharing">Lire</button>
+        </p>
+    </div>
+
+    <div class="card" data-specialite="energierenouvelable">
+        <h3>Etude et réalisation d’un projet d’installation solaires photovoltaïques dans le village de Thioffior au sud de Kaolack (Sénégal)</h3>
+        <p>Spécialité : Énergie Renouvelable</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1R5t_Wq7ktleWOecb65y6dgpR5VcmFZta/view?usp=sharing">Lire</button>
+        </p>
+    </div>
+
+    <div class="card" data-specialite="energierenouvelable">
+        <h3>Dimensionnement d’un système à énergie renouvelable </h3>
+        <p>Spécialité : Énergie Renouvelable</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1Zo-CXzuij4m_EXTfq-eeYruJxWOuMkkL/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="energierenouvelable">
+        <h3>Les chartes et guides territoriaux de développement des énergies renouvelables : intérêts et limites </h3>
+        <p>Spécialité : Énergie Renouvelable</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1_0XN8c6uB1-KXU_67EQSzO67aLO_e-Xr/view?usp=sharing">Lire</button>
+        </p>
+    </div>
+
+    <div class="card" data-specialite="energierenouvelable">
+        <h3>Étude comparative de différentes solutions énergétiques pour le bâtiment de la Résidence Elisabeth A.C.P. à Liège, dans le contexte en évolution des communautés d’énergie renouvelable en Région wallonne </h3>
+        <p>Spécialité : Énergie Renouvelable</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1mZnPsFcqh269B3i-74i-JfLfcOyAzI0z/view?usp=sharing">Lire</button>
+        </p>
+    </div>
+
+    <div class="card" data-specialite="energierenouvelable">
+        <h3>Conception et Optimisation d’un système à énergies renouvelables en 
+            vue de la satisfaction des besoins en énergie électrique du bloc 
+            pédagogique <br>(Pôle technique) du centre universitaire Salhi Ahmed 
+            Naama
+        </h3>
+        <p>Spécialité : Énergie Renouvelable</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1UoC-T9HyCEMjxkI6K7CsLMEbFv5H5K6m/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="energierenouvelable">
+        <h3>Simulation de Dispatching Combiné Economique/ 
+            Environnemental (CEED) en Présence d’une Source à Energie 
+            Renouvelable (SER)
+        </h3>
+        <p>Spécialité : Énergie Renouvelable</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1hmL1PIT1Rz7K1dckFWQjgN7MbRF7y0Wo/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="energierenouvelable">
+        <h3>Energie photovoltaïque </h3>
+        <p>Spécialité : Énergie Renouvelable</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1do-d77jU9TqHGGLgQls95K5glog9sMuF/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="energetique">
+        <h3>Diagnostic des disfonctionnements des tours de refroidissement de la raffinerie de l'huile CEVITAL</h3>
+        <p>Spécialité : Énergétique et Procédés</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1AAm-7mzVUiazlMBtWvfN7eYAZVN9y-bF/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="energetique">
+        <h3>Amélioration de la production d’un distillateur hotbox avec un système préchauffage (capteur-échangeur)</h3>
+        <p>Spécialité : Énergétique et Procédés</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1Fj6o9fBop23eRyxRU-z23-xZ17P6v1PR/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="energetique">
+        <h3>Impact des transformations constructives sur le confort thermique <br> (cas d’une maison kabyle traditionnelle)</h3>
+        <p>Spécialité : Énergétique et Procédés</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1Y1FSUcd8mu3nIHxOhTyeR9u-7nptBeB_/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="energetique">
+        <h3>AUDIT ENERGETIQUE DU CENTRE SECTORIEL DE FORMATION PROFESSIONNEL AUX METIERS DE BATIMENT ET DES TRAVAUX PUBLICS
+        </h3>
+        <p>Spécialité : Énergétique et Procédés</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1-EsS9frqHQW1_cmUFcfwRC2q7oUJM7C-/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="geniecivilbatiment">
+        <h3>ETUDES TECHNIQUES DETAILLES DES TRAVAUX 
+            D’AMENAGEMENT ET DE BITUMAGE DE VOIRIES DANS LA VILLE 
+            DE OUAHIGOUYA : RUE NAKAMBE (1,8 KM)
+        </h3>
+        <p>Spécialité : Génie civil </p>
+        <p><button class="readBtn" data-file="http://documentation.2ie-edu.org/cdi2ie/opac_css/doc_num.php?explnum_id=3177">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="geniecivilbatiment">
+        <h3>Etudes techniques d'un batiment R+7 à usage d'hotel administratif à OUAGADOUGOU
+        </h3>
+        <p>Spécialité : Génie civil </p>
+        <p><button class="readBtn" data-file="http://documentation.2ie-edu.org/cdi2ie/opac_css/doc_num.php?explnum_id=205">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="geniecivilbatiment">
+        <h3>EANALYSE CONCEPTION ET DIMENSIONNEMENT DES 
+            OUVRAGES HYDRAULIQUES ROUTIERS DE LA ROUTE 
+            KOUDOUGOU-TOMA EN VUE DE SON BITUMAGE
+        </h3>
+        <p>Spécialité : Génie civil </p>
+        <p><button class="readBtn" data-file="http://documentation.2ie-edu.org/cdi2ie/opac_css/doc_num.php?explnum_id=763">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="geniecivilbatiment">
+        <h3>Proposition d'un centre d'alphabétisation pour adulte dans la commune de Ouidah au Bénin 
+        </h3>
+        <p>Spécialité : Génie civil </p>
+        <p><button class="readBtn" data-file="https://fr.scribd.com/document/552339808/document-de-soutenance-de-licence-en-architecture">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="geniecivilbatiment">
+        <h3>Etude d’un bâtiment R+4+deux entre sol, a usage multiple Contrevente par voiles porteurs.  
+        </h3>
+        <p>Spécialité : Génie civil </p>
+        <p><button class="readBtn" data-file="http://dspace.univ-bouira.dz:8080/jspui/bitstream/123456789/3277/1/m%C3%A9moire%202017.pdf">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="geniecivilbatiment">
+        <h3>Etudes techniques des différentes techniques d’amélioration 
+            d’une couche de base : Cas de l’amélioration au concassé à 
+            l’échangeur Nord de Ouagadougou  
+        </h3>
+        <p>Spécialité : Génie civil </p>
+        <p><button class="readBtn" data-file="http://documentation.2ie-edu.org/cdi2ie/opac_css/doc_num.php?explnum_id=2612">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="geniecivilbatiment">
+        <h3>Dimensionnement d’un bâtiment hospitalier (bâtiment traumatologie) </h3>
+        <p>Spécialité : Génie civil </p>
+        <p><button class="readBtn" data-file="http://documentation.2ie-edu.org/cdi2ie/opac_css/doc_num.php?explnum_id=431">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="geniecivilbatiment">
+        <h3>Etude de stabilité des fondations profondes d’un viaduc ferroviaire menacé par un glissement de terrain</h3>
+        <p>Spécialité : Génie civil </p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1xtkkj7BepWCVC-y6lsGhJBjralXFqLrO/view?usp=sharing">Lire</button></p>
+    </div>
+
+     <div class="card" data-specialite="geniecivilbatiment">
+        <h3>ETUDE DYNAMIQUE D’UN PONT PAR DEUX METHODES : <BR> ANALYTIQUE DYNAMIQUE</h3>
+        <p>Spécialité : Génie civil </p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/11QlQ58ebtIZM-DL8ZB9kWumB5FAHRyMx/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="geniecivilbatiment">
+        <h3>Analyse et interprétation des donnéesd’auscultation des barrages par le modèle HST</h3>
+        <p>Spécialité : Génie civil </p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1OVEdf0xLj46y2vxkt9y4MgdbwGMaxYsn/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="geniecivilbatiment">
+        <h3>LE DIMENSIONNEMENT DU CORPS DE CHAUSSEE ET ETUDEDE LA STABILITE DU TALUS D’UN TRONÇON ROUTIER CHIFFAET BERROUAGHIA (PK20+895 AU PK22+370)</h3>
+        <p>Spécialité : Génie civil </p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/16uWD3OScCJeXkoLwNtcKdhxSC9rH_Jtd/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="geniecivilbatiment">
+        <h3>Comportement mécanique des murs de soutènement en béton armé</h3>
+        <p>Spécialité : Génie civil </p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1QraqHKjMzyK4_8sxIl4_7Ozab03Mmw8f/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="energetique">
+        <h3>Étude analytique et numérique de la thermodiffusion en fluide binaire en présence de convection mixte</h3>
+        <p>Spécialité : Énergétique et Procédés</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/157vjVKiSh-ZyFGYvJo7HyRNbAQh3UIfc/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="energetique">
+        <h3>DOCUMENT DE COURS PLANS ET INSTRUMENTATION </h3>
+        <p>Spécialité : Énergétique et Procédés</p>
+        <p><button class="readBtn" data-file="https://fr.scribd.com/document/710188321/Les-Plans-en-Instrumentation-1705253555">Lire</button></p>
+    </div>
+
+     <div class="card" data-specialite="energetique">
+        <h3>Supervision d’un niveau d’eau via un automate programmable : Etude et Conception   </h3>
+        <p>Spécialité : Énergétique et Procédés</p>
+        <p><button class="readBtn" data-file="http://dspace.univ-tiaret.dz/bitstream/123456789/2577/1/TH.M.GE.FR.2022.13.pdf">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="energetique">
+        <h3>Réalisation d’un régulateur industrielle PID à baseArduino et LABVIEW. <br>Application au Régulation de Température et Niveau </h3>
+        <p>Spécialité : Énergétique et Procédés</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1_xxmLNVcbkl0L-QXaZS4nsoavdrOt6TB/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="energetique">
+        <h3>Régulation PID par API et supervision du niveau d’un réservoir cylindrique</h3>
+        <p>Spécialité : Énergétique et Procédés</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1XNxv1WZMedAUHe8t77tag23kZ8nz_12C/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="energetique">
+        <h3>Conception du Contrôleur PID pour le Moteur à Courant Continu (MCC) à Excitation indépendante Simulation sous Matlab/Simulink</h3>
+        <p>Spécialité : Énergétique et Procédés</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1Bs-pKEmOrODKm74thplsqwPu1wcCWW0m/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="energetique">
+        <h3>COMMANDE PID ET PAR LOGIQUE FLOUE POUR L'AMÉLIORATION DE LA FINESSE ET DE LA PRÉCISION DES MOUVEMENTS D'UN BRAS ROBOTISÉ À PLUSIEURS AXES ET DEGRÉS DE LIDERTÉ.</h3>
+        <p>Spécialité : Énergétique et Procédés</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1cohlRf8tWYMb50p9Aw2bkM-v-WruoJRs/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="energetique">
+        <h3>Commande et supervision d'un système hydraulique à base API SIEMENS</h3>
+        <p>Spécialité : Énergétique et Procédés</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1qFIKMCaWPieCRNa694fjSzSOBhM7G5fr/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="energetique">
+        <h3>Supervision d’un niveau d’eau via un automate programmable :Etude et Conception</h3>
+        <p>Spécialité : Énergétique et Procédés</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1UFq4DoXbOrz9gvBFBadbbRiV0fy2C9l6/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="froid-climatisation">
+        <h3>Etude comparative de dimensionnement des systèmes de climatisation VRV et mural du nouveau siège de l'Assemblée Générale du Bénin </h3>
+        <p>Spécialité : Froid et Climatisation</p>
+        <p><button class="readBtn" data-file="https://fr.scribd.com/document/963294928/Memoire-de-Soutenance-condensation">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="froid-climatisation">
+        <h3>Etude comparative entre les couples (NH3/H20) et (NH3/NaSCN) utilisés dans les machines à ABSORPTION </h3>
+        <p>Spécialité : Froid et Climatisation</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1qmHOy-xLGmtOEkotzJXpWPVV3Y8G71dA/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="froid-climatisation">
+        <h3>Etude de la fiabilisation du réseau incendie site 6000 </h3>
+        <p>Spécialité : Froid et Climatisation</p>
+        <p><button class="readBtn" data-file="https://fr.scribd.com/document/765421769/Memoire-de-Soutenance">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="froid-climatisation">
+        <h3>MISE EN PLACE D’UNE POLITIQUE  DE MAINTENANCE DU SYSTEME DE CLIMATISATION A EAU GLACEE  DU SIEGE DE LA BEAC DE BRAZZAVILLE</h3>
+        <p>Spécialité : Froid et Climatisation</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1xF1o1Z1dOm8BjPexAqh19rx6sbPDA40Y/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="energetique">
+        <h3> Etude des pompes à chaleur à absorption liquide (ammoniac- eau)</h3>
+        <p>Spécialité : Énergétique et Procédés</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1itNIXvGaRuvnrREtkyt-OkbXlaI_Fk9V/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="froid-climatisation">
+        <h3> Etude comparative pour la climatisation d’un immeuble </h3>
+        <p>Spécialité : Froid et Climatisation</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1Lg_EP0_9iXcjDlhb-uZU9WoBBspbnGjo/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="froid-climatisation">
+        <h3>Etude Numérique de la compression par un Ejecteur </h3>
+        <p>Spécialité : Froid et Climatisation</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1M7U3Fa0x5QLZbb-YQZryCcsTcYPkDuPa/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="froid-climatisation">
+        <h3>ETUDE ET OPTIMISATION D’UNE CHAMBRE FROIDE A REFRIGERATION</h3>
+        <p>Spécialité : Froid et Climatisation</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1O3A4uGuWukm6IddxELrsUA5SHALVq2bB/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="froid-climatisation">
+        <h3> Etude et comparaison numérique des fluides frigorigènes utilisés pour les climatiseurs</h3>
+        <p>Spécialité : Froid et Climatisation</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/19W6SdjsdJZoOmWarHwAeWnEysleV7baw/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="froid-climatisation">
+        <h3>Dimensionnement et mise en œuvre d'une installation de climatisation Air/Eau</h3>
+        <p>Spécialité : Froid et Climatisation</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1EOVq4KB7WDpHUnO80ADqwqQCPlfIXlf2/view?usp=sharing">Lire</button></p>
+    </div>
+
+
+    <div class="card" data-specialite="froid-climatisation">
+        <h3> Dimensionnement et programmation d’un automate pour piloter une installation frigorifique</h3>
+        <p>Spécialité : Froid et Climatisation</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1UqjF1qv_ghwRgVNg9vUsgVIfPHIsx8KC/view?usp=sharing">Lire</button></p>
+    </div>
+
+     <div class="card" data-specialite="froid-climatisation">
+        <h3>Climatisation GHP d’un hôtel avec module Yoshi </h3>
+        <p>Spécialité : Froid et Climatisation</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1n5JfY4Gsd9fJ92owTIdKsc_m8iH6GvJj/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="energetique">
+        <h3>Étude de faisabilité d’une installation decogénération vapeur-électricité solaire intégréeà l’unité détergente de L’E.N.A.D </h3>
+        <p>Spécialité : Énergétique et Procédés</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1BfdYFb9NdyhMKDj5b4MmOux50cJ8jKdM/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="energetique">
+        <h3>ANALYSE DE L’EFFET COURONNE EN REGIME ALTERNATIF </h3>
+        <p>Spécialité : Énergétique et Procédés</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/19KkLnYh29Wma2ivxZPP3AUUvnPL_o0Ws/view?usp=sharing">Lire</button></p>
+    </div>
+
+    <div class="card" data-specialite="froid-climatisation">
+        <h3> Etude et simulation numérique de la ventilation naturelle dans une maison individuelle.</h3>
+        <p>Spécialité : Froid et Climatisation</p>
+        <p><button class="readBtn" data-file="https://drive.google.com/file/d/1Q_rDMOBYVg7MzIF0f1r6lsXREdT2DvA8/view?usp=sharing">Lire</button></p>
+    </div>
+
+   
+    La pensée humaine est un mélange de la logique et de l’imagination. C’est-à-dire une 
+    superposition de rigueur et d’intuition agissant ensemble ou séparément.
+</section>
+
+<!-- La lecture s'ouvre maintenant dans un nouvel onglet; la modal a été retirée. -->
+
+<footer>
+    <p>© 2026 Réussir ma Soutenance - Tous droits réservés</p>
+</footer>
+
+<script src="script.js"></script>
+    <script>
+        // Hide loader once the page has fully loaded
+        function hideLoader() {
+            var loader = document.getElementById('loader');
+            if (!loader) return;
+            loader.style.opacity = '0';
+            setTimeout(function(){ loader.style.display = 'none'; }, 500);
+        }
+
+        // Prefer custom event (flutter-first-frame) if available, otherwise use window load
+        window.addEventListener('flutter-first-frame', hideLoader);
+        window.addEventListener('load', hideLoader);
+        // Fallback: hide after 6s in case load doesn't fire
+        setTimeout(hideLoader, 6000);
+    </script>
+</body>
+</html>
