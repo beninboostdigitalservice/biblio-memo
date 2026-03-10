@@ -1,33 +1,23 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Réussir ma Soutenance — bibliothèque en ligne de mémoires, guides et ressources pour préparer votre soutenance. Parcourez, consultez et téléchargez des mémoires classés par spécialité.">
-    <!-- Open Graph -->
-    <meta property="og:title" content="Réussir Ma Soutenance">
-    <meta property="og:description" content="Bibliothèque en ligne de mémoires et ressources pour préparer votre soutenance. Consultez et téléchargez des mémoires par spécialité.">
-    <meta property="og:image" content="logo.png">
-    <meta property="og:url" content="./">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Réussir ma Soutenance">
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Réussir ma Soutenance">
-    <meta name="twitter:description" content="Bibliothèque en ligne de mémoires : trouvez, consultez et téléchargez des mémoires par spécialité.">
-    <meta name="twitter:image" content="logo.png">
-    <title> Réussir ma Soutenance</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <!DOCTYPE html>
-    <html lang="fr">
-      <head>
-        <meta charset="utf-8">
-        <meta http-equiv="refresh" content="0; url=accueil.html">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Réussir ma Soutenance — Redirection</title>
-        <link rel="icon" href="logo.png">
-      </head>
-      <body>
-        <p>Redirection vers <a href="accueil.html">Accueil</a> — si la redirection échoue, cliquez sur le lien.</p>
-      </body>
-    </html>
+    <title>Réussir ma Soutenance</title>
+    <link rel="icon" href="logo.png">
+    <script>
+      // Immediate redirect without showing visible text; use replace to avoid polluting history
+      try {
+        window.location.replace('accueil.html');
+      } catch (e) {
+        // fallback: set location
+        window.location.href = 'accueil.html';
+      }
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <p>JavaScript désactivé — <a href="accueil.html">Aller à l'accueil</a></p>
+    </noscript>
+  </body>
+</html>

@@ -491,6 +491,19 @@ nav a:hover {
     line-height: 1.4;
 }
 
+/* Elegant specialty label (replace "Spécialité : X" -> "X") */
+.card .specialite {
+    display: inline-block;
+    margin-bottom: 12px;
+    padding: 6px 12px;
+    border-radius: 12px;
+    background: linear-gradient(90deg, rgba(37,79,176,0.06), rgba(16,185,129,0.03));
+    color: var(--primary-variant);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.2px;
+}
+
 .card p:first-of-type {
     align-self: flex-start;
     margin-bottom: 12px;

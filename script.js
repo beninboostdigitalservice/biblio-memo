@@ -225,8 +225,24 @@ document.addEventListener('DOMContentLoaded', () => {
     setupMenu();
     setupCardReveal();
     replaceReadButtons();
+    replaceSpecialiteLabels();
     initAnimatedText();
     filterMemoires();
+
+    // Remove the visible "Spécialité :" prefix in card paragraphs and style them
+    function replaceSpecialiteLabels() {
+        const cards = document.querySelectorAll('.memoires .card');
+        cards.forEach(card => {
+            // Find the first <p> that contains the word 'Spécialité' (case-insensitive)
+            const p = Array.from(card.querySelectorAll('p')).find(el => /spécialité\s*:/i.test(el.textContent));
+            if (!p) return;
+            // Extract text after ':' or after the word 'Spécialité'
+            const match = p.textContent.match(/:\s*(.*)$/i);
+            const value = match && match[1] ? match[1].trim() : p.textContent.replace(/spécialité\s*:?/i, '').trim();
+            p.textContent = value || '';
+            p.classList.add('specialite');
+        });
+    }
 
     // Highlight du lien de navigation actif
     try {

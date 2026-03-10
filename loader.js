@@ -14,20 +14,29 @@
     wrap.innerHTML = html;
     document.body.insertBefore(wrap.firstElementChild, document.body.firstChild);
   }
+    function hideLoader() {
+      var loader = document.getElementById('loader');
+      if (!loader) return;
+      loader.style.opacity = '0';
+      setTimeout(function(){ if (loader && loader.parentNode) loader.parentNode.removeChild(loader); }, 400);
+    }
 
-  function hideLoader() {
-    var loader = document.getElementById('loader');
-    if (!loader) return;
-    loader.style.opacity = '0';
-    setTimeout(function(){ if (loader && loader.parentNode) loader.parentNode.removeChild(loader); }, 500);
-  }
+    // Only show the loader once (persisted). If already shown, skip insertion.
+    try {
+      if (!localStorage.getItem('rms_loader_shown')) {
+        // mark shown so subsequent navigations won't show it
+        localStorage.setItem('rms_loader_shown', '1');
+        if (document.readyState === 'loading') insertLoader(); else setTimeout(insertLoader, 10);
 
-  // Insert loader as early as possible
-  if (document.readyState === 'loading') insertLoader(); else setTimeout(insertLoader, 10);
-
-  // Events to hide loader
-  window.addEventListener('flutter-first-frame', hideLoader);
-  window.addEventListener('load', hideLoader);
-  // fallback timeout
-  setTimeout(hideLoader, 6000);
+        // Hide quickly (1s) to make the splash short and pleasant
+        var maxDelay = 1000;
+        window.addEventListener('load', hideLoader);
+        setTimeout(hideLoader, maxDelay);
+      }
+    } catch (err) {
+      // If localStorage not available, fall back to always showing but short timeout
+      if (document.readyState === 'loading') insertLoader(); else setTimeout(insertLoader, 10);
+      window.addEventListener('load', hideLoader);
+      setTimeout(hideLoader, 1000);
+    }
 })();
