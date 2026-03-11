@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function filterMemoires() {
+        if (!specialiteSelect || !memoireList) return;
         const selected = normalizeSpecialite(specialiteSelect.value);
         const cards = memoireList.querySelectorAll('.card');
         cards.forEach(card => {
@@ -83,13 +84,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // NOTE: onglets de tri supprimés — on utilise uniquement le `select` pour filtrer
-
-    specialiteSelect.addEventListener('change', () => {
-        filterMemoires();
-    });
+    if (specialiteSelect) {
+        specialiteSelect.addEventListener('change', () => {
+            filterMemoires();
+        });
+    }
 
     // Remplacer les boutons "Lire" existants par 2 icônes : view + download
     function replaceReadButtons() {
+        if (!memoireList) return;
         const oldBtns = memoireList.querySelectorAll('.readBtn');
         oldBtns.forEach(b => {
             const file = b.getAttribute('data-file');
@@ -128,22 +131,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Gestion des clics sur view / download
-    memoireList.addEventListener('click', (e) => {
-        const view = e.target.closest('.icon-btn.view');
-        const dl = e.target.closest('.icon-btn.download');
-        if (view) {
-            const file = view.dataset.file;
-            if (file) openDriveOrUrlInNewTab(file);
-            try { StatsManager && StatsManager.recordPDFClick((view.closest('.card')||{}).dataset.specialite, (view.closest('.card')||{}).querySelector('h3')?.textContent || 'Sans titre'); } catch(e) {}
-            return;
-        }
-        if (dl) {
-            const file = dl.dataset.file;
-            if (file) downloadFile(file);
-            try { StatsManager && StatsManager.recordPDFClick((dl.closest('.card')||{}).dataset.specialite, (dl.closest('.card')||{}).querySelector('h3')?.textContent || 'Sans titre'); } catch(e) {}
-            return;
-        }
-    });
+    if (memoireList) {
+        memoireList.addEventListener('click', (e) => {
+            const view = e.target.closest('.icon-btn.view');
+            const dl = e.target.closest('.icon-btn.download');
+            if (view) {
+                const file = view.dataset.file;
+                if (file) openDriveOrUrlInNewTab(file);
+                try { StatsManager && StatsManager.recordPDFClick((view.closest('.card')||{}).dataset.specialite, (view.closest('.card')||{}).querySelector('h3')?.textContent || 'Sans titre'); } catch(e) {}
+                return;
+            }
+            if (dl) {
+                const file = dl.dataset.file;
+                if (file) downloadFile(file);
+                try { StatsManager && StatsManager.recordPDFClick((dl.closest('.card')||{}).dataset.specialite, (dl.closest('.card')||{}).querySelector('h3')?.textContent || 'Sans titre'); } catch(e) {}
+                return;
+            }
+        });
+    }
 
     function toDriveDownload(url) {
         try {
@@ -276,45 +281,59 @@ document.addEventListener('DOMContentLoaded', () => {
 // Ajoutez ceci à votre script.js existant
 
 // ============================================
-// SYSTÈME DE STATISTIQUES DE CLICS
+// SYSTÈME DE STATISTIQUES GLOBAL (FIREBASE)
 // ============================================
 
-const StatsManager = {
-    // Clés de stockage
-    KEYS: {
-        TOTAL_VISITS: 'rms_total_visits',
-        PDF_CLICKS: 'rms_pdf_clicks',
-        SPECIALITE_STATS: 'rms_specialite_stats',
-        LAST_VISIT: 'rms_last_visit'
-    },
+// TODO: REMPLACEZ CECI PAR LA CONFIGURATION DE VOTRE PROJET FIREBASE !
+const firebaseConfig = {
+    apiKey: "AIzaSyB3KtzJ7VUTv7kQd0pHhaI-SpHpxNCdTqg",
+    authDomain: "biblio-memo-73494.firebaseapp.com",
+    databaseURL: "https://biblio-memo-73494-default-rtdb.firebaseio.com",
+    projectId: "biblio-memo-73494",
+    storageBucket: "biblio-memo-73494.firebasestorage.app",
+    messagingSenderId: "386112484513",
+    appId: "1:386112484513:web:3bb7ce8d9f35ee13b62ce0"
+};
 
-    // Initialisation
+let db = null;
+
+// On initialise Firebase uniquement si la configuration a été modifiée
+if (firebaseConfig.apiKey !== "VOTRE_API_KEY_ICI") {
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.database();
+} else {
+    console.warn("Firebase n'est pas configuré. Veuillez remplacer firebaseConfig dans script.js.");
+}
+
+const StatsManager = {
     init() {
+        if (!db) return; // Stoppe si Firebase n'est pas configuré
         this.trackVisit();
         this.setupPDFTracking();
-        this.displayStats(); // Pour la page admin
+        
+        // Si on est sur la page admin, écouter les données en temps réel
+        const adminContainer = document.getElementById('statsContainer');
+        if (adminContainer) {
+            this.listenToStats(adminContainer);
+        }
     },
 
-    // Compteur de visites du site
+    // Compteur de visites uniques (basé sur la session du navigateur)
     trackVisit() {
         const today = new Date().toDateString();
-        const lastVisit = localStorage.getItem(this.KEYS.LAST_VISIT);
-        
-        // Incrémente seulement si nouvelle session (dernière visite != aujourd'hui)
-        // Ou utilisez sessionStorage pour compter chaque onglet ouvert
-        let visits = parseInt(localStorage.getItem(this.KEYS.TOTAL_VISITS) || '0');
+        const lastVisit = sessionStorage.getItem('rms_last_visit_session');
         
         if (lastVisit !== today) {
-            visits++;
-            localStorage.setItem(this.KEYS.TOTAL_VISITS, visits);
-            localStorage.setItem(this.KEYS.LAST_VISIT, today);
+            sessionStorage.setItem('rms_last_visit_session', today);
+            
+            // Incrémente le compteur global de Firebase
+            const visitsRef = db.ref('stats/totalVisits');
+            visitsRef.transaction((currentVisits) => {
+                return (currentVisits || 0) + 1;
+            });
         }
-        
-        console.log(`Visites totales: ${visits}`);
-        return visits;
     },
 
-    // Suivi des clics sur les PDF
     setupPDFTracking() {
         const memoireList = document.getElementById('memoireList');
         if (!memoireList) return;
@@ -333,55 +352,52 @@ const StatsManager = {
     },
 
     recordPDFClick(specialite, title) {
-        // Clics totaux
-        let totalClicks = parseInt(localStorage.getItem(this.KEYS.PDF_CLICKS) || '0');
-        totalClicks++;
-        localStorage.setItem(this.KEYS.PDF_CLICKS, totalClicks);
+        if (!db) return;
 
-        // Stats par spécialité
-        let specStats = JSON.parse(localStorage.getItem(this.KEYS.SPECIALITE_STATS) || '{}');
-        specStats[specialite] = (specStats[specialite] || 0) + 1;
-        localStorage.setItem(this.KEYS.SPECIALITE_STATS, JSON.stringify(specStats));
+        // 1. Incrémente le compteur total global
+        db.ref('stats/totalPDFClicks').transaction((current) => {
+            return (current || 0) + 1;
+        });
 
-        // Historique détaillé (limité aux 50 derniers)
-        let history = JSON.parse(localStorage.getItem('rms_click_history') || '[]');
-        history.unshift({
+        // 2. Incrémente par spécialité
+        db.ref('stats/bySpecialite/' + specialite).transaction((current) => {
+            return (current || 0) + 1;
+        });
+
+        // 3. Ajoute dans l'historique (limité manuellement ou simplement ajouté avec le timestamp)
+        const newClickRef = db.ref('stats/history').push();
+        newClickRef.set({
             date: new Date().toISOString(),
             specialite: specialite,
-            title: title.substring(0, 50) // Limite la longueur
+            title: title.substring(0, 50)
         });
-        if (history.length > 50) history = history.slice(0, 50);
-        localStorage.setItem('rms_click_history', JSON.stringify(history));
-
-        console.log(`Clic enregistré: ${specialite} - ${title}`);
     },
 
-    // Récupère toutes les statistiques
-    getStats() {
-        return {
-            totalVisits: parseInt(localStorage.getItem(this.KEYS.TOTAL_VISITS) || '0'),
-            totalPDFClicks: parseInt(localStorage.getItem(this.KEYS.PDF_CLICKS) || '0'),
-            bySpecialite: JSON.parse(localStorage.getItem(this.KEYS.SPECIALITE_STATS) || '{}'),
-            history: JSON.parse(localStorage.getItem('rms_click_history') || '[]')
-        };
-    },
-
-    // Affiche les stats dans la console (ou créez une page admin)
-    displayStats() {
-        const stats = this.getStats();
-        console.log('=== STATISTIQUES Réussir ma Soutenance ===');
-        console.log(`Visites totales: ${stats.totalVisits}`);
-        console.log(`Clics PDF totaux: ${stats.totalPDFClicks}`);
-        console.log('Par spécialité:', stats.bySpecialite);
+    // Écoute les changements en temps réel pour l'admin
+    listenToStats(container) {
+        container.innerHTML = "<p>Chargement des statistiques Firebase globales en temps réel...</p>";
         
-        // Vérifie si on est sur une page admin
-        const adminContainer = document.getElementById('statsContainer');
-        if (adminContainer) {
-            this.renderAdminDashboard(adminContainer, stats);
-        }
+        db.ref('stats').on('value', (snapshot) => {
+            const data = snapshot.val() || {};
+            
+            // Formatage des données pour simuler l'ancienne structure
+            const stats = {
+                totalVisits: data.totalVisits || 0,
+                totalPDFClicks: data.totalPDFClicks || 0,
+                bySpecialite: data.bySpecialite || {},
+                history: []
+            };
+
+            // Transformation de l'historique (objet Firebase vers tableau trié)
+            if (data.history) {
+                stats.history = Object.values(data.history).sort((a, b) => new Date(b.date) - new Date(a.date));
+            }
+
+            this.renderAdminDashboard(container, stats);
+        });
     },
 
-    // Rendu du tableau de bord admin
+    // L'affichage reste presque pareil qu'avant
     renderAdminDashboard(container, stats) {
         const specialites = {
             'cyber': 'Cybersécurité',
@@ -395,7 +411,7 @@ const StatsManager = {
 
         let html = `
             <div class="stats-dashboard">
-                <h2>📊 Tableau de bord des statistiques</h2>
+                <h2>📊 Statistiques Globales en Temps Réel</h2>
                 
                 <div class="stats-grid">
                     <div class="stat-card">
@@ -416,7 +432,6 @@ const StatsManager = {
                 <div class="specialite-stats">
         `;
 
-        // Trie par nombre de clics décroissant
         const sortedSpecs = Object.entries(stats.bySpecialite)
             .sort((a, b) => b[1] - a[1]);
 
@@ -457,41 +472,22 @@ const StatsManager = {
 
         html += `
                 </ul>
-                
-                <button onclick="StatsManager.exportStats()" class="export-btn">
-                    📥 Exporter les données (JSON)
-                </button>
                 <button onclick="StatsManager.resetStats()" class="reset-btn">
-                    🗑️ Réinitialiser les statistiques
+                    🗑️ Réinitialiser (Firebase)
                 </button>
+                <p style="margin-top:20px; color:#666; font-size:12px;">Ces données proviennent de Firebase et incluent tous les utilisateurs.</p>
             </div>
         `;
 
         container.innerHTML = html;
     },
 
-    // Exporte les données
-    exportStats() {
-        const stats = this.getStats();
-        const dataStr = JSON.stringify(stats, null, 2);
-        const blob = new Blob([dataStr], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `stats_reussirmasoutenance_${new Date().toISOString().split('T')[0]}.json`;
-        a.click();
-        
-        URL.revokeObjectURL(url);
-    },
-
-    // Réinitialise les stats
     resetStats() {
-        if (confirm('Êtes-vous sûr de vouloir réinitialiser toutes les statistiques ?')) {
-            Object.values(this.KEYS).forEach(key => localStorage.removeItem(key));
-            localStorage.removeItem('rms_click_history');
-            alert('Statistiques réinitialisées !');
-            location.reload();
+        if (!db) return;
+        if (confirm('⚠️ Êtes-vous sûr de vouloir supprimer TOUTES les statistiques Firebase GLOBALEMENT ? Cette action est irréversible.')) {
+            db.ref('stats').set(null).then(() => {
+                alert('Statistiques réinitialisées sur le serveur !');
+            });
         }
     }
 };
